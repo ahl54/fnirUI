@@ -1,2 +1,2 @@
 # fnirUI
-senior design for fNIR user interface
+senior design for functional near infrared (fNIR) user interface
