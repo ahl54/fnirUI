@@ -4,16 +4,16 @@
 # Last Modified: 11-2-2016 by Anna Lu
 
 # 	Background:
-#  transmittance of material sample is related to its optical depth τ and
+#  transmittance of material sample is related to its optical depth (tau) and
 #  to its absorbance A
 
 from math import exp
 from math import pow
-from scipy import constants.N_A
+from scipy import constants
 
 # initialize variables
 phi_t = 0 # radiant flux transmitted
-phi_i = 0 # radiant flux received
+phi_i = 1 # radiant flux received
 tau = 0 # optical depth
 A = 0 # 
 
@@ -35,7 +35,8 @@ epsilon_i = 0 # molar attenuation coeffeicient
 c_i = 0 # amount concentration
 l = 0 # path length of the beam of light
 
-N_A = 
+
+# N_A is Avogadro's constant 
 
 # episilon_i = N_A / ln(10) * omega_i
 
