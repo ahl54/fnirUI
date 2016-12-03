@@ -2,6 +2,8 @@
 # December 3, 2016
 # protocol type: polling
 
+import pySerial
+
 def hello():
 	# receives helloandInfo input from sensor
 	# exchanges only at startup
