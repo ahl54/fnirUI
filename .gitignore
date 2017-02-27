@@ -1,3 +1,9 @@
+# Notebook and Markups #
+########################
+*.rmd
+*.Rm
+*.ipynb
+
 # General documents #
 #####################
 *.gdoc
@@ -7,6 +13,7 @@
 *.xlsx
 *.rtf
 *.pdf
+*.csv
 
 # Images #
 ##########
