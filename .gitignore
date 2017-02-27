@@ -17,9 +17,6 @@
 
 # Images #
 ##########
-*.jpg
-*.jpeg
-*.png
 *.tif
 
 # Compiled source #
