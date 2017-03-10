@@ -1,12 +1,12 @@
 
 # coding: utf-8
 
-# In[40]:
+# In[61]:
 
 get_ipython().magic('matplotlib inline')
 #Discriminate wavelet reduction of motion noise
 #Authored by: Connor Johnson
-#Last modified: 2/28/2017 by Anna
+#Last modified: 3/10/2017 by Anna
 
 # file processing
 import os, ast
@@ -16,11 +16,10 @@ import numpy as np
 # visualization
 import matplotlib.pyplot as plt
 
-# Depreciated because I didn't want to install fortran and a whole library for one line of code
+# Depreciated to avoid fortran dependency
 #from statsmodels.robust import mad
 
 def mad(data, axis=None):
-    # Authored by Anna
     # median absolute deviation
     return np.median(np.absolute(data - np.median(data,axis)), axis)
 
@@ -33,22 +32,28 @@ def waveletSmooth(signal, wavelet, level=1):
     sigma = mad(coeff[-level])
     signal_len = len(signal)
     threshold = sigma * np.sqrt(2*np.log(signal_len))
+    # Note: alternative distance metrics can be used to vary the threshold
     coeff[1:] =(pywt.threshold(i , value=threshold, mode="soft") for i in coeff[1:])
     #reconstruct signal
     y = pywt.waverec(coeff, wavelet, mode="per")
     return y
     
-def signal_to_noise(raw, filt):
-    # returns the signal to noise given  raw amplitude and filtered amplitude
+def rms(data):
+    # returns the root mean squared amplitude of the data
+    baseline = np.median(data)
+    return np.sqrt(((data - baseline)**2).mean())
     
-    # Frobenius normalization includes baseline difference
-    signal = np.linalg.norm(filt)/len(filt)
-    noise = np.linalg.norm(raw)/len(raw)
-        
-    if noise == 0:
+def signal_to_noise(signal, noise):
+    # returns the signal to noise ratio
+    # assumption: Equal impedance
+
+    Asignal = rms(signal)
+    Anoise = rms(noise)
+    
+    if Anoise == 0:
         SNR = float('nan')
     else:
-        SNR = (signal/noise)**2
+        SNR = (Asignal/Anoise)**2
     return SNR
     
     
@@ -72,10 +77,10 @@ for filename in os.listdir(raw_signal_path):
             
             # Eight part gaussian wavelet decomposition on amplitudes
             # f(t) = y(t) + e(t), where y(t) is the signal and e(t) is the noise
-            wavelet_type = 'db8' # Daubechies wavelet mapping
+            wavelet_type = 'db2' # Daubechies wavelet mapping
             # smoothing level maxes out at 7
             filt = waveletSmooth(raw, wavelet_type, level=7)
-            SNR = signal_to_noise(raw,filt)
+            SNR = signal_to_noise(raw, filt)
            
             # visualize
             p1, = plt.plot(raw, color="b", alpha=0.5, label='raw_signal')
