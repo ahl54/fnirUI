@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[61]:
+# In[63]:
 
 get_ipython().magic('matplotlib inline')
 #Discriminate wavelet reduction of motion noise
@@ -13,6 +13,7 @@ import os, ast
 # signal processing
 import pywt
 import numpy as np
+import math
 # visualization
 import matplotlib.pyplot as plt
 
@@ -51,10 +52,10 @@ def signal_to_noise(signal, noise):
     Anoise = rms(noise)
     
     if Anoise == 0:
-        SNR = float('nan')
+        SNRdb = float('nan')
     else:
-        SNR = (Asignal/Anoise)**2
-    return SNR
+        SNRdb = 10*math.log10((Asignal/Anoise)**2)
+    return SNRdb
     
     
 raw_signal_path = """raw_signal/"""
@@ -80,12 +81,12 @@ for filename in os.listdir(raw_signal_path):
             wavelet_type = 'db2' # Daubechies wavelet mapping
             # smoothing level maxes out at 7
             filt = waveletSmooth(raw, wavelet_type, level=7)
-            SNR = signal_to_noise(raw, filt)
+            SNRdb = signal_to_noise(raw, filt)
            
             # visualize
             p1, = plt.plot(raw, color="b", alpha=0.5, label='raw_signal')
             p2, = plt.plot(filt, color="b", label='filtered')
-            SNR_report = ('SNR: ', '%.3f'%(SNR))
+            SNR_report = ('SNRdB: ', '%.3f'%(SNRdb))
             plt.legend([p1, p2], ['raw_signal', 'filtered'], loc=0, title=SNR_report)
             plt.title('Raw & Filtered Signal Overlay ' + filename )
             plt.xlabel('Time (ms)')
