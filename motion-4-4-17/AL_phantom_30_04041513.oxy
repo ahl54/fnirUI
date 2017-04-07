@@ -1,0 +1,9 @@
+fnirHS.dll Hb/HbO2 file
+Start Time:	Tue Apr 04 15:13:21 2017
+
+Start Code:	3833.673531	3833515
+Freq Code:	1790368.000000
+Light:	Pad0	80	0	80	80	0	80	0	Pad1	80	0	80	80	0	80	0	Pad2	100	100	100	100	100	100	0
+Gains:	Pad0-Near	3	2	3	3	2	3	3	Pad0-Far	3	2	3	3	2	3	3	Pad1-Near	2	2	2	2	2	2	2	Pad1-Far	2	2	2	2	2	2	2	Pad2-Near	50	50	50	50	50	50	50	Pad2-Far	60	60	60	60	60	60	60
+Other:	Infrascanner3000
+-1	Device Stopped
